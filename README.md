@@ -1,0 +1,2 @@
+# aMAZEd
+generates maze 
