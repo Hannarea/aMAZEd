@@ -9,12 +9,18 @@ int is_right_breakable(int maze[SIZE][SIZE], int i, int j);
 int is_left_breakable(int maze[SIZE][SIZE], int i, int j);
 int is_up_breakable(int maze[SIZE][SIZE], int i, int j);
 int is_down_breakable(int maze[SIZE][SIZE], int i, int j);
+void initialize_v_walls(int walls[SIZE][SIZE - 1]);
+void initialize_h_walls(int walls[SIZE - 1][SIZE]);
 
 int main(){
     int maze[SIZE][SIZE];
+    int v_walls[SIZE][SIZE - 1];
+    int h_walls[SIZE - 1][SIZE];
     int i, j;
 
     initialize_maze(maze);
+    initialize_v_walls(v_walls);
+    initialize_h_walls(h_walls);
 
     print_maze(maze);
 
@@ -87,4 +93,20 @@ int is_up_breakable(int maze[SIZE][SIZE], int i, int j){
     return check;
 }
 
+void initialize_v_walls(int walls[SIZE][SIZE - 1]){
+    int i, j;
+    for(i=0; i<SIZE; i++){
+        for (j=0; j<SIZE - 1; j++){
+            walls[i][j] = 1;
+        }
+    }
+}
 
+void initialize_h_walls(int walls[SIZE - 1][SIZE]){
+    int i, j;
+    for(i=0; i<SIZE - 1; i++){
+        for (j=0; j<SIZE; j++){
+            walls[i][j] = 1;
+        }
+    }
+}
