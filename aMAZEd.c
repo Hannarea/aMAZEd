@@ -11,11 +11,12 @@ int is_up_breakable(int maze[SIZE][SIZE], int i, int j);
 int is_down_breakable(int maze[SIZE][SIZE], int i, int j);
 void initialize_v_walls(int walls[SIZE][SIZE - 1]);
 void initialize_h_walls(int walls[SIZE - 1][SIZE]);
-void break_right_wall(int maze[SIZE][SIZE], int walls[SIZE - 1][SIZE], int i, int j);
-void break_left_wall(int maze[SIZE][SIZE], int walls[SIZE - 1][SIZE], int i, int j);
+void break_right_wall(int maze[SIZE][SIZE], int walls[SIZE][SIZE - 1], int i, int j);
+void break_left_wall(int maze[SIZE][SIZE], int walls[SIZE][SIZE - 1], int i, int j);
 void break_up_wall(int maze[SIZE][SIZE], int walls[SIZE - 1][SIZE], int i, int j);
 void break_down_wall(int maze[SIZE][SIZE], int walls[SIZE - 1][SIZE], int i, int j);
 int maze_not_complete(int maze[SIZE][SIZE]);
+void replace_number(int maze[SIZE][SIZE], int a, int b);
 
 int main(){
     int maze[SIZE][SIZE];
@@ -117,11 +118,11 @@ void initialize_h_walls(int walls[SIZE - 1][SIZE]){
 }
 
 // given the room index, compute the wall index and break
-void break_right_wall(int maze[SIZE][SIZE], int walls[SIZE - 1][SIZE], int i, int j){
+void break_right_wall(int maze[SIZE][SIZE], int walls[SIZE][SIZE - 1], int i, int j){
     walls[i][j] = 0;
     replace_number(maze, maze[i][j], maze[i][j + 1]);
 }
-void break_left_wall(int maze[SIZE][SIZE], int walls[SIZE - 1][SIZE], int i, int j){
+void break_left_wall(int maze[SIZE][SIZE], int walls[SIZE][SIZE - 1], int i, int j){
     walls[i][j - 1] = 0;
     replace_number(maze, maze[i][j], maze[i][j - 1]);
 }
@@ -153,6 +154,43 @@ void replace_number(int maze[SIZE][SIZE], int a, int b){
             }
         }
     }
+}
+
+void assemble_maze(int maze[SIZE][SIZE], int v_walls[SIZE][SIZE - 1], int h_walls[SIZE - 1][SIZE] ){
+    int num1, num2, num3, check;
+    srand((time(0)));
+
+    check = maze_not_complete(maze);
+    while (check == 1){
+        num1 = rand() % SIZE;
+        num2 = rand() % SIZE;
+        num3 = rand() % 4 + 1; // get a number 1 - 4 to pick randomly whether to test the R, L, U, or D wall...
+        if (num3 == 1){ // check the L wall
+            if (is_left_breakable(maze, num1, num2)){
+                break_left_wall(maze, v_walls, num1, num2);
+            }
+        }
+        if (num3 == 2){ // check the R wall
+            if (is_right_breakable(maze, num1, num2)){
+                break_right_wall(maze, v_walls, num1, num2);
+            }
+
+        }
+        if (num3 == 3){ // check the Up wall
+            if (is_up_breakable(maze, num1, num2)){
+                break_up_wall(maze, h_walls, num1, num2);
+            }
+
+        }
+        if (num3 == 4){ // check the Down wall
+            if (is_down_breakable(maze, num1, num2)){
+                break_down_wall(maze, h_walls, num1, num2);
+            }
+        }
+        check = maze_not_complete(maze);
+    }
+
+
 }
 
 int maze_not_complete(int maze[SIZE][SIZE]){
