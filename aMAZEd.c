@@ -17,6 +17,8 @@ void break_up_wall(int maze[SIZE][SIZE], int walls[SIZE - 1][SIZE], int i, int j
 void break_down_wall(int maze[SIZE][SIZE], int walls[SIZE - 1][SIZE], int i, int j);
 int maze_not_complete(int maze[SIZE][SIZE]);
 void replace_number(int maze[SIZE][SIZE], int a, int b);
+void assemble_maze(int maze[SIZE][SIZE], int v_walls[SIZE][SIZE - 1], int h_walls[SIZE - 1][SIZE]);
+void print_walls(int h_walls[SIZE - 1][SIZE],int v_walls[SIZE][SIZE - 1]);
 
 int main(){
     int maze[SIZE][SIZE];
@@ -30,7 +32,9 @@ int main(){
 
     print_maze(maze);
 
+    assemble_maze(maze, v_walls, h_walls);
 
+    print_walls(h_walls, v_walls);
     return 0;
 }
 
@@ -203,6 +207,27 @@ int maze_not_complete(int maze[SIZE][SIZE]){
         }
     }
     return 0;
+}
+
+void print_walls(int h_walls[SIZE - 1][SIZE],int v_walls[SIZE][SIZE - 1]){
+    int i, j;
+    for (i=0; i<SIZE; i++){
+        for(j=0; j<SIZE; j++){
+            if (h_walls[i][j] == 1){
+                printf("_");
+            }
+            else{
+                printf(" ");
+            }
+            if (v_walls[i][j] == 1){
+                printf("|");
+            }
+            else{
+                printf(" ");
+            }
+        }
+        printf("\n");
+    }
 }
 
 
