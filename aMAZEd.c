@@ -3,6 +3,10 @@
 #include <stdio.h>
 #define SIZE 10
 
+/**
+ * Initializes the values in each cell of the maze
+ * @param maze: 2D array containing the cell numbers
+ */
 void initialize_maze(int maze[SIZE][SIZE]);
 void print_maze(int maze[SIZE][SIZE]);
 int is_right_breakable(int maze[SIZE][SIZE], int i, int j);
@@ -11,6 +15,15 @@ int is_up_breakable(int maze[SIZE][SIZE], int i, int j);
 int is_down_breakable(int maze[SIZE][SIZE], int i, int j);
 void initialize_v_walls(int walls[SIZE][SIZE - 1]);
 void initialize_h_walls(int walls[SIZE - 1][SIZE]);
+/**
+ * Breaks the wall on the right of a cell
+ * @param maze: 2D array containing the cell numbers
+ * @param walls: 2D array containing the vertical walls
+ * @param i: row of the cell
+ * @param j: column of the cell
+ * @pre the wall to break is valid
+ * @post the corresponding wall value in walls is 0
+ */
 void break_right_wall(int maze[SIZE][SIZE], int walls[SIZE][SIZE - 1], int i, int j);
 void break_left_wall(int maze[SIZE][SIZE], int walls[SIZE][SIZE - 1], int i, int j);
 void break_up_wall(int maze[SIZE][SIZE], int walls[SIZE - 1][SIZE], int i, int j);
